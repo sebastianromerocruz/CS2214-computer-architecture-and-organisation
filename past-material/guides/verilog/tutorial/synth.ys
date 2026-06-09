@@ -1,4 +1,0 @@
-read_verilog test.v
-hierarchy; proc; opt; techmap; opt
-write_verilog synth.v
-show -format ps -prefix synth
