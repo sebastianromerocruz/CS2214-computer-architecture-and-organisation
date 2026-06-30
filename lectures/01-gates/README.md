@@ -1,11 +1,8 @@
----
-aliases: ["Week 1 - Logic Gates", "Week 1", "Introduction & Logic Gates"]
-tags: [lecture, week1]
----
-
 <h2 align=center>Week I</h2>
 
 <h1 align=center>Introduction & Logic Gates</h1>
+
+<p align=center><strong><em>Song of the day</strong>: <a href="https://youtu.be/8vEahj1dd2E?si=xolYZwJgVFHl8Qtl"><strong><u>Arcturus Beaming</u></strong></a> by The Crane Wives (2024)</em></p>
 
 ---
 
@@ -33,7 +30,7 @@ This is the question at the heart of what we'll be doing all semester—and it t
 
 Ask someone off the street and you'll hear things like "electricity" or "there's a chip in there." None of these are exactly wrong, but none of them explain the *mechanism*. Our goal is to build a complete picture: from the physics of electrons all the way up to the software you interact with every day. And the picture, once assembled, is genuinely striking—because those two ends are extraordinarily far apart.
 
-Consider what it takes to run a Python script. The programmer writing it doesn't need to know what a transistor is. The transistor doesn't need to know what Python is. And yet they compose seamlessly, layer by layer, with each one speaking a completely different language than the one above it. The idea that makes this possible is **[[abstraction]]**—each layer hides its complexity behind a clean interface and trusts that the layer beneath it works. When you write `x + y` in Python, you are standing on top of a compiler, an assembler, an instruction set, a datapath, a handful of logic gates, and somewhere at the bottom, a few transistors switching on and off. None of those layers know about each other. They don't have to.
+Consider what it takes to run a Python script. The programmer writing it doesn't need to know what a transistor is. The transistor doesn't need to know what Python is. And yet they compose seamlessly, layer by layer, with each one speaking a completely different language than the one above it. The idea that makes this possible is **abstraction**—each layer hides its complexity behind a clean interface and trusts that the layer beneath it works. When you write `x + y` in Python, you are standing on top of a compiler, an assembler, an instruction set, a datapath, a handful of logic gates, and somewhere at the bottom, a few transistors switching on and off. None of those layers know about each other. They don't have to.
 
 ```
 ┌──────────────────────┬───────────────────────────────────┐
@@ -66,9 +63,9 @@ To understand where we're starting, it helps to trace the journey from source co
 
 ### What Is a Gate, Actually?
 
-A **[[transistors|transistor]]** is a semiconductor device that acts as an electrically controlled switch: apply enough voltage to the control terminal and current flows; remove it and current stops. That binary on/off behavior is exactly what we need to represent 1 and 0.
+A **transistor** is a semiconductor device that acts as an electrically controlled switch: apply enough voltage to the control terminal and current flows; remove it and current stops. That binary on/off behavior is exactly what we need to represent 1 and 0.
 
-A **[[logic-gates|logic gate]]** is what you get when you wire a small number of transistors together in a specific configuration—a circuit element that takes binary inputs and produces a single binary output according to a fixed rule. AND, OR, NOT: that's it. And yet everything your CPU does—running a video game, encrypting a file, rendering a webpage—is ultimately just those three operations, composed in very large numbers. A modern chip contains tens of billions of these switches on a piece of silicon the size of a fingernail.
+A **logic gate** is what you get when you wire a small number of transistors together in a specific configuration—a circuit element that takes binary inputs and produces a single binary output according to a fixed rule. AND, OR, NOT: that's it. And yet everything your CPU does—running a video game, encrypting a file, rendering a webpage—is ultimately just those three operations, composed in very large numbers. A modern chip contains tens of billions of these switches on a piece of silicon the size of a fingernail.
 
 That's the thing worth holding onto as we start: the gap between "flip a switch" and "run a program" is enormous, and crossing it is what this course is about. The gates are where we begin.
 
@@ -92,9 +89,18 @@ The NOT gate—also called an **inverter**—is the right place to start because
 
 **Gate symbol:**
 
-```
-  A ──▷○── Y
-```
+<a id="fg-1"></a>
+
+<p align=center>
+    <img src="assets/gate-not.svg">
+    </img>
+</p>
+
+<p align=center>
+    <sub>
+        <strong>Figure I</strong>: The NOT gate—a triangle with an inversion bubble on the output.
+    </sub>
+</p>
 
 **Boolean equation:**
 
@@ -119,11 +125,18 @@ The AND gate outputs 1 only when **all** of its inputs are 1—a useful way to t
 
 **Gate symbol** (flat back, rounded/D-shaped front):
 
-```
-  A ──┐
-      ├──── Y
-  B ──┘
-```
+<a id="fg-2"></a>
+
+<p align=center>
+    <img src="assets/gate-and.svg">
+    </img>
+</p>
+
+<p align=center>
+    <sub>
+        <strong>Figure II</strong>: The AND gate—flat back, rounded D-shaped front.
+    </sub>
+</p>
 
 **Boolean equation:**
 
@@ -152,11 +165,18 @@ The OR gate outputs 1 when **at least one** input is 1. This is worth pausing on
 
 **Gate symbol** (curved back, pointed front):
 
-```
-  A ──┐
-      ├──── Y
-  B ──┘
-```
+<a id="fg-3"></a>
+
+<p align=center>
+    <img src="assets/gate-or.svg">
+    </img>
+</p>
+
+<p align=center>
+    <sub>
+        <strong>Figure III</strong>: The OR gate—curved back, pointed front.
+    </sub>
+</p>
 
 **Boolean equation:**
 
@@ -185,6 +205,19 @@ Three more gates appear often enough to have their own symbols. Two of them have
 
 **XOR** ("exclusive OR") outputs 1 when its two inputs *differ*—exactly one of them is 1. This is the version of "or" that matches everyday English most closely. More importantly for us, XOR turns out to be the addition primitive: when you add two single bits, the sum bit is exactly their XOR, and the carry-out is their AND. We'll see this again when we build adders.
 
+<a id="fg-4"></a>
+
+<p align=center>
+    <img src="assets/gate-xor.svg">
+    </img>
+</p>
+
+<p align=center>
+    <sub>
+        <strong>Figure IV</strong>: The XOR gate—an OR body with an extra curved line at the back.
+    </sub>
+</p>
+
 ```
 Y = A ⊕ B
 ```
@@ -202,6 +235,19 @@ Y = A ⊕ B
 Y = ~(AB)   i.e., NOT of the whole product
 ```
 
+<a id="fg-5"></a>
+
+<p align=center>
+    <img src="assets/gate-nand.svg">
+    </img>
+</p>
+
+<p align=center>
+    <sub>
+        <strong>Figure V</strong>: The NAND gate—an AND body with an inversion bubble on the output.
+    </sub>
+</p>
+
 | A | B | Y |
 |---|---|---|
 | 0 | 0 | 1 |
@@ -214,6 +260,19 @@ Y = ~(AB)   i.e., NOT of the whole product
 ```
 Y = ~(A+B)   i.e., NOT of the whole sum
 ```
+
+<a id="fg-6"></a>
+
+<p align=center>
+    <img src="assets/gate-nor.svg">
+    </img>
+</p>
+
+<p align=center>
+    <sub>
+        <strong>Figure VI</strong>: The NOR gate—an OR body with an inversion bubble on the output.
+    </sub>
+</p>
 
 | A | B | Y |
 |---|---|---|
@@ -228,7 +287,7 @@ Y = ~(A+B)   i.e., NOT of the whole sum
 
 <a id="2"></a>
 
-## [[boolean-algebra|Boolean Algebraic Notation]]
+## Boolean Algebraic Notation
 
 We now have six gates and a symbol for each. The problem is that as soon as a circuit involves more than a handful of gates, diagrams become unmanageable—there's no clean way to reason about whether two different circuits compute the same function, or to simplify a function to use fewer gates, without a way to write it down symbolically. What we need is an algebraic language.
 
@@ -249,9 +308,9 @@ The `+` for OR and juxtaposition for AND come from Boolean's original mathematic
 
 Without knowing operator precedence, you can't read someone else's expression correctly—and a misread expression is a misunderstood circuit. The rule, from tightest to loosest binding:
 
-1. **NOT** — applied to its immediate operand first
+1. **NOT**: applied to its immediate operand first
 2. **AND**
-3. **OR** — loosest binding
+3. **OR**: loosest binding
 
 So `Ā · B + C` means `((NOT A) AND B) OR C`, not `NOT(A AND (B OR C))`. When there's any potential ambiguity, add parentheses. There's no cost to over-parenthesizing, and the cost of a precedence error is a wrong circuit.
 
@@ -265,6 +324,19 @@ The single most useful simplification rule is **DeMorgan's Theorem**: negating a
 ```
 
 You can verify either identity by checking the truth table for both sides—they match for every input combination. Why does this matter? Because it tells you that a NAND gate (output `~(AB)`) is *identical* to an OR gate with individually inverted inputs (`Ā + B̄`). These are two different physical implementations of the same function. Hardware designers exploit this deliberately: they'll draw a gate one way in a schematic but think about it the other way to make the circuit's intent clearer. This technique is called **bubble pushing**, and you cannot read professional schematics fluently without it.
+
+<a id="fg-7"></a>
+
+<p align=center>
+    <img src="assets/demorgan.svg">
+    </img>
+</p>
+
+<p align=center>
+    <sub>
+        <strong>Figure VII</strong>: A NAND gate (left) and an OR gate with both inputs inverted (right) are the same circuit—DeMorgan's Theorem made physical.
+    </sub>
+</p>
 
 ---
 
@@ -280,19 +352,22 @@ The method is straightforward. Start at the inputs and work toward the output, l
 
 Here is the circuit from the recitation slides, with inputs A, B, C, D and output Y:
 
-```
-  A ──○─┐
-        ├──[AND]──── W1 ──┐
-  B ──○─┘                  ├──[AND]──── W2 ──┐
-                            │                  ├──[NOR]──── Y
-  C ─────────────────────────                  │
-                                               │
-  D ────────────────────────────────────────────
-```
+<a id="fg-8"></a>
+
+<p align=center>
+    <img src="assets/circuit-analysis-example.svg">
+    </img>
+</p>
+
+<p align=center>
+    <sub>
+        <strong>Figure VIII</strong>: The example circuit redrawn—A and B inverted into the first AND, chained through a second AND with C, then a NOR with D.
+    </sub>
+</p>
+
+**Step 1:** What does W1 carry?
 
 The small circles (`○`) on the A and B input wires are **inversion bubbles**—they mean "negate this signal before it enters the gate." W1 and W2 are internal wires that don't connect to anything outside the circuit; they exist only to carry values between gates.
-
-**Step 1 — What does W1 carry?**
 
 The first AND gate takes NOT A and NOT B as inputs (because of the bubbles). AND outputs 1 only when all inputs are 1, so:
 
@@ -302,7 +377,7 @@ W1 = (NOT A) AND (NOT B)  =  ~A & ~B
 
 W1 is 1 only when both A and B are 0.
 
-**Step 2 — What does W2 carry?**
+**Step 2:** What does W2 carry?
 
 The second AND gate takes W1 and C, with no bubbles:
 
@@ -310,7 +385,7 @@ The second AND gate takes W1 and C, with no bubbles:
 W2 = W1 AND C  =  (~A & ~B) & C  =  ~A & ~B & C
 ```
 
-**Step 3 — What does Y carry?**
+**Step 3:** What does Y carry?
 
 The NOR gate gives `Y = ~(W2 OR D)`. Substituting W2 and applying DeMorgan's to push the negation inward:
 
@@ -424,7 +499,7 @@ When a system call says it returns a 32-bit integer, or a register is described 
 
 <a id="5"></a>
 
-## [[hexadecimal|Hexadecimal]]
+## Hexadecimal
 
 Binary is the native language of hardware, but reading it is painful. A 32-bit memory address written out in binary is 32 ones and zeros—nearly impossible to parse at a glance, and very easy to copy incorrectly. **Hexadecimal** (base 16, abbreviated *hex*) is the standard human-readable shorthand.
 
@@ -485,7 +560,7 @@ Any time you see a memory address, a color code (`#FF8800`), a network MAC addre
 
 <a id="6"></a>
 
-## [[twos-complement|Two's Complement]]
+## Two's Complement
 
 Everything so far has been non-negative. But real programs constantly subtract, negate, and compare signed values—and the hardware needs to handle all of that using the same addition circuits we've already seen. The question is: how do you encode negative numbers in binary so that ordinary addition still works?
 

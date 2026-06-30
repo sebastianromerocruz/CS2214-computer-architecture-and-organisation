@@ -1,8 +1,3 @@
----
-aliases: ["Week 2 - Verilog & Bitwise Operations", "Week 2", "Verilog & Bitwise Operations"]
-tags: [lecture, week2]
----
-
 <h2 align=center>Week I (cont.)</h2>
 
 <h1 align=center>Verilog & Bitwise Operations</h1>
@@ -25,7 +20,7 @@ Last time we learned to read a circuit diagram and extract a Boolean expression 
 
 <a id="1"></a>
 
-## Hardware Description: [[verilog|Verilog]]
+## Hardware Description: Verilog
 
 Hardware engineers don't design chips by drawing schematics by hand and mailing them to a fabrication plant. They write code—but it's a fundamentally different kind of code than anything you've written before.
 
@@ -39,7 +34,7 @@ We'll use our running example from last lecture—the circuit with expression `Y
 
 <a id="1-1"></a>
 
-### [[structural-verilog|Structural Verilog]]
+### Structural Verilog
 
 **Structural** Verilog is the style that most directly mirrors a circuit diagram. Every gate is explicitly instantiated by name, every internal wire is declared, and the connections between them are spelled out one by one. If you can read a schematic, you can write structural Verilog from it mechanically.
 
@@ -85,7 +80,7 @@ Unlike the `assign` style below, gate-level instantiation doesn't allow expressi
 
 <a id="1-2"></a>
 
-### [[continuous-assignment-verilog|Continuous Assignment Verilog]]
+### Continuous Assignment Verilog
 
 Structural Verilog is precise, but it's verbose for describing what is often a simple mathematical relationship. For **combinational logic**—circuits whose output depends only on the *current* inputs—there's a more direct style.
 
@@ -151,7 +146,7 @@ Second, synthesis may **optimize** the circuit. It might reorder gates, merge th
 
 <a id="2"></a>
 
-## [[bitwise-operations|Bitwise Operations]]
+## Bitwise Operations
 
 We've been thinking about gates operating on individual 0s and 1s. But a real program works with integers—32-bit values, 64-bit values, bytes. How do the gate operations we've been studying apply to those?
 
