@@ -55,6 +55,6 @@
   <text x="840" y="358" fill="#404040" font-size="22" font-weight="600">Y</text>
 
   <!-- result -->
-  <text x="450" y="438" fill="#57068c" font-size="24" font-weight="700" text-anchor="middle">Y = (&#172;A &#183; &#172;B &#183; C) + &#172;D</text>
+  <text x="450" y="438" fill="#57068c" font-size="22" font-weight="700" text-anchor="middle">Y = (A &#183; &#172;D) + (B &#183; &#172;D) + (&#172;C &#183; &#172;D)</text>
   <text x="450" y="460" fill="#6d6d6d" font-size="14" font-style="italic" text-anchor="middle">Circuit analysis: tracing wires from inputs to output</text>
 </svg>

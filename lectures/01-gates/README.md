@@ -394,38 +394,46 @@ The NOR gate gives `Y = ~(W2 OR D)`. Substituting W2 and applying DeMorgan's to 
                        =  (A + B + ~C)    &  ~D
 ```
 
-Reading this in **sum-of-products (SOP)** form—a list of AND-terms OR'd together, where each AND-term describes one set of inputs that makes Y true:
+The expression `(A + B + ~C) & ~D` is a perfectly valid description of the circuit. But the same function can be written in many equivalent shapes, and having everyone default to the same one makes expressions easier to compare, simplify, and read off a truth table directly. The shape this course standardises on is **sum-of-products (SOP)**: a list of AND-terms OR'd together, where each AND-term describes one specific set of inputs that makes Y true.
+
+Getting there is just the distributive law from ordinary algebra, `x(y + z) = xy + xz`, applied to Booleans:
 
 ```
-Y = (~A & ~B & C) | ~D
+(A + B + ~C) & ~D  =  (A & ~D)  |  (B & ~D)  |  (~C & ~D)
 ```
 
-In compact Boolean notation: **Y = ĀB̄C + D̄**
+Each term on the right is now a single AND of literals, and the three are OR'd together—exactly the SOP shape:
 
-Reading it aloud: "Y is 1 when (A is 0 and B is 0 and C is 1), *or* when D is 0." SOP form is the standard way to express a combinational function, and it's what you'll use throughout this course.
+```
+Y = (A & ~D) | (B & ~D) | (~C & ~D)
+```
+
+In compact Boolean notation: **Y = AD̄ + BD̄ + C̄D̄**
+
+Reading it aloud: "Y is 1 whenever D is 0 *and* at least one of A, B, or ~C is 1." SOP form is the standard way to express a combinational function, and it's what you'll use throughout this course.
 
 ### Building the Truth Table
 
 With the expression in hand, building the truth table is mechanical: enumerate every possible input combination and evaluate the expression. With four inputs there are **2⁴ = 16** rows. A systematic strategy is to count up in binary from 0000 to 1111, which guarantees every combination appears exactly once.
 
-| A | B | C | D | `~A & ~B & C` | `~D` | Y = (`~A & ~B & C`) \| `~D` |
-|---|---|---|---|:---:|:---:|:---:|
-| 0 | 0 | 0 | 0 | 0 | 1 | **1** |
-| 0 | 0 | 0 | 1 | 0 | 0 | **0** |
-| 0 | 0 | 1 | 0 | 1 | 1 | **1** |
-| 0 | 0 | 1 | 1 | 1 | 0 | **1** |
-| 0 | 1 | 0 | 0 | 0 | 1 | **1** |
-| 0 | 1 | 0 | 1 | 0 | 0 | **0** |
-| 0 | 1 | 1 | 0 | 0 | 1 | **1** |
-| 0 | 1 | 1 | 1 | 0 | 0 | **0** |
-| 1 | 0 | 0 | 0 | 0 | 1 | **1** |
-| 1 | 0 | 0 | 1 | 0 | 0 | **0** |
-| 1 | 0 | 1 | 0 | 0 | 1 | **1** |
-| 1 | 0 | 1 | 1 | 0 | 0 | **0** |
-| 1 | 1 | 0 | 0 | 0 | 1 | **1** |
-| 1 | 1 | 0 | 1 | 0 | 0 | **0** |
-| 1 | 1 | 1 | 0 | 0 | 1 | **1** |
-| 1 | 1 | 1 | 1 | 0 | 0 | **0** |
+| A | B | C | D | `A & ~D` | `B & ~D` | `~C & ~D` | Y |
+|---|---|---|---|:---:|:---:|:---:|:---:|
+| 0 | 0 | 0 | 0 | 0 | 0 | 1 | **1** |
+| 0 | 0 | 0 | 1 | 0 | 0 | 0 | **0** |
+| 0 | 0 | 1 | 0 | 0 | 0 | 0 | **0** |
+| 0 | 0 | 1 | 1 | 0 | 0 | 0 | **0** |
+| 0 | 1 | 0 | 0 | 0 | 1 | 1 | **1** |
+| 0 | 1 | 0 | 1 | 0 | 0 | 0 | **0** |
+| 0 | 1 | 1 | 0 | 0 | 1 | 0 | **1** |
+| 0 | 1 | 1 | 1 | 0 | 0 | 0 | **0** |
+| 1 | 0 | 0 | 0 | 1 | 0 | 1 | **1** |
+| 1 | 0 | 0 | 1 | 0 | 0 | 0 | **0** |
+| 1 | 0 | 1 | 0 | 1 | 0 | 0 | **1** |
+| 1 | 0 | 1 | 1 | 0 | 0 | 0 | **0** |
+| 1 | 1 | 0 | 0 | 1 | 1 | 1 | **1** |
+| 1 | 1 | 0 | 1 | 0 | 0 | 0 | **0** |
+| 1 | 1 | 1 | 0 | 1 | 1 | 0 | **1** |
+| 1 | 1 | 1 | 1 | 0 | 0 | 0 | **0** |
 
 The truth table is authoritative—it exhaustively lists every case—but it doesn't scale. A circuit with 32 inputs would require over four billion rows. The Boolean expression is what makes large circuits tractable: you can reason about the function algebraically without enumerating every case.
 
