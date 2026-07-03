@@ -30,27 +30,20 @@ This is the question at the heart of what we'll be doing all semester—and it t
 
 Ask someone off the street and you'll hear things like "electricity" or "there's a chip in there." None of these are exactly wrong, but none of them explain the *mechanism*. Our goal is to build a complete picture: from the physics of electrons all the way up to the software you interact with every day. And the picture, once assembled, is genuinely striking—because those two ends are extraordinarily far apart.
 
-Consider what it takes to run a Python script. The programmer writing it doesn't need to know what a transistor is. The transistor doesn't need to know what Python is. And yet they compose seamlessly, layer by layer, with each one speaking a completely different language than the one above it. The idea that makes this possible is **abstraction**—each layer hides its complexity behind a clean interface and trusts that the layer beneath it works. When you write `x + y` in Python, you are standing on top of a compiler, an assembler, an instruction set, a datapath, a handful of logic gates, and somewhere at the bottom, a few transistors switching on and off. None of those layers know about each other. They don't have to.
+Consider what it takes to run a Python script. The programmer writing it doesn't need to know what a transistor is. The transistor doesn't need to know what Python is. And yet they compose seamlessly, layer by layer, with each one speaking a completely different language than the one above it. The idea that makes this possible is **abstraction**—each layer hides its complexity behind a clean interface and trusts that the layer beneath it works. When you write `x + y` in Python, you are standing on top of a compiler, an assembler, an instruction set, a datapath, a handful of logic gates, and somewhere at the bottom, a few transistors switching on and off. None of those layers know about each other—they don't have to.
 
-```
-┌──────────────────────┬───────────────────────────────────┐
-│  Application Software│  Programs                         │
-├──────────────────────┼───────────────────────────────────┤
-│  Operating Systems   │  Device Drivers                   │
-├──────────────────────┼───────────────────────────────────┤
-│  Architecture        │  Instructions, Registers          │
-├──────────────────────┼───────────────────────────────────┤
-│  Microarchitecture   │  Datapaths, Controllers           │
-├──────────────────────┼───────────────────────────────────┤
-│  Logic               │  Adders, Memories                 │
-├──────────────────────┼───────────────────────────────────┤
-│  Digital Circuits    │  AND Gates, NOT Gates             │
-├──────────────────────┼───────────────────────────────────┤
-│  Devices             │  Transistors, Diodes              │
-├──────────────────────┼───────────────────────────────────┤
-│  Physics             │  Electrons                        │
-└──────────────────────┴───────────────────────────────────┘
-```
+<a id="fg-0"></a>
+
+<p align=center>
+    <img src="assets/abstraction-stack.svg">
+    </img>
+</p>
+
+<p align=center>
+    <sub>
+        <strong>Figure 0</strong>: The abstraction stack from programmer to physics—each layer hides its complexity from the ones above it. This course lives in the four layers in the middle.
+    </sub>
+</p>
 
 This course lives in the middle of this stack—**digital circuits**, **logic**, **microarchitecture**, and **architecture**. This is the layer where the interesting engineering decisions get made: how instructions are encoded, how a datapath is wired, how memory is organized. The physics below us sets constraints we have to respect; the software above us is what we're ultimately building for.
 
@@ -490,7 +483,7 @@ Going the other direction requires **repeated division by 2**: divide the number
 | 3 ÷ 2    | 1        | **1**     |
 | 1 ÷ 2    | 0        | **1**     |
 
-Reading remainders bottom to top: **11001**. So 25₁₀ = **0b11001**. ✓
+Reading remainders bottom to top: **11001**. So 25₁₀ = **0b11001**.
 
 ### Terminology
 
@@ -628,7 +621,7 @@ Step 2. Invert:  0011  →  1100
 Step 3. Add 1:   1100 + 0001 = 1101
 ```
 
-Result: −3 = **1101** in 4-bit two's complement. ✓
+Result: −3 = **1101** in 4-bit two's complement.
 
 ### Two's Complement to Decimal
 
@@ -654,7 +647,7 @@ Step 3. Add 1:   0010 + 0001 = 0011
 Step 4. 0011 = 3 → −3
 ```
 
-Result: **1101₂ = −3** ✓
+Result: **1101₂ = −3**
 
 Applying the encode steps twice gets you back where you started—this symmetry is not a coincidence, it's a mathematical property of the encoding.
 
@@ -665,3 +658,7 @@ Applying the encode steps twice gets you back where you started—this symmetry 
 ```
 
 For 4 bits: −8 to 7. For 8 bits: −128 to 127. For 32 bits: −2,147,483,648 to 2,147,483,647. This is why integer overflow is a real bug and not a theoretical curiosity: adding two large positive 32-bit integers can produce a result exceeding 2,147,483,647, which wraps around to a large negative number, silently and without error. Understanding two's complement is what lets you reason about *why* that happens and when to guard against it.
+
+---
+
+<sub>**Next: [Verilog & Bitwise Operations](/lectures/02-verilog-and-bitwise)**</sub>

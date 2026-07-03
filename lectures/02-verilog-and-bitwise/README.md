@@ -48,6 +48,19 @@ module MyCircuit(A, B, C, D, Y);
 
 The name after `module` is the module's identifier. The parenthesized list is the **port list**—every signal that crosses the module boundary must appear here. The `input` and `output` declarations specify which direction each signal flows.
 
+<a id="fg-1"></a>
+
+<p align=center>
+    <img src="assets/verilog-module.svg">
+    </img>
+</p>
+
+<p align=center>
+    <sub>
+        <strong>Figure I</strong>: A module as an opaque boundary—the port list (A, B, C, D in, Y out) is the only thing callers ever see; the gates that implement it are hidden inside.
+    </sub>
+</p>
+
 Internal wires—signals that exist only inside the module to carry values between gates—must be declared explicitly:
 
 ```verilog
@@ -173,7 +186,22 @@ For each bit position, the result is 1 if and only if **both** input bits at tha
 
 `10 & 6 == 2`. The only position where both inputs had a 1 was position 1 (the 2s place).
 
+<a id="fg-2"></a>
+
+<p align=center>
+    <img src="assets/bitwise-and.svg">
+    </img>
+</p>
+
+<p align=center>
+    <sub>
+        <strong>Figure II</strong>: Bitwise AND as four independent single-bit AND gates, one per column—the same gate from Lecture 01, just applied position by position with no interaction between columns.
+    </sub>
+</p>
+
 AND is the standard **masking** tool. If you want to isolate specific bits of a value and zero out everything else, AND the value against a pattern—called a **mask**—that has 1s exactly where you want to look and 0s everywhere else. The AND gate passes through the bits under the 1s and zeros out everything else.
+
+> **NES:** The NES controller shifts button state out one bit at a time through address `$4016`—each read puts the next button (A, B, Select, Start, Up, Down, Left, Right) into bit 0. To test just that one button, real game code does `AND #%00000001`, masking away every bit except the one that was just read. This is the exact same masking pattern, applied inside a 60-times-a-second game loop.
 
 ---
 
@@ -192,6 +220,21 @@ For each bit position, the result is 1 if **either** input bit at that position 
 
 `10 | 6 == 14`. Where AND clears bits, OR **sets** them. OR-ing a value against a mask turns on every bit that is 1 in the mask while leaving all other bits unchanged. This is how you force specific bits on without touching the rest.
 
+<a id="fg-3"></a>
+
+<p align=center>
+    <img src="assets/bitwise-or.svg">
+    </img>
+</p>
+
+<p align=center>
+    <sub>
+        <strong>Figure III</strong>: Bitwise OR as four independent single-bit OR gates, one per column.
+    </sub>
+</p>
+
+> **NES:** Every NES sprite has an attribute byte that packs eight flags into one byte—palette index in bits 0–1, priority in bit 5, horizontal/vertical flip in bits 6–7. To cycle a sprite's palette without disturbing the other bits, real code does `ORA #%00000011` then `EOR #%00000011` then `EOR paletteCycleCounter`—net effect `(byte & ~0x03) | newPalette`. This read-modify-write pattern, using AND to clear a field and OR to set it, is how every hardware register in existence gets written.
+
 ---
 
 ### Bitwise NOT (`~`)
@@ -207,6 +250,19 @@ Flips every bit: 0 becomes 1, 1 becomes 0.
 ```
 
 There's an important caveat: `~` flips *all* bits in the integer, so the result depends entirely on the bit-width of the type. In C, `int` is typically 32 bits, so `~6` flips all 32 bits—and combined with two's complement, `~x == -(x+1)` for signed integers. `~6` in C is `-7`, not `9`. Keep bit-width in mind whenever you use `~`.
+
+<a id="fg-4"></a>
+
+<p align=center>
+    <img src="assets/bitwise-not.svg">
+    </img>
+</p>
+
+<p align=center>
+    <sub>
+        <strong>Figure IV</strong>: Bitwise NOT as four independent inverters, one per bit—flip every column and there is nowhere for a "narrower" result to hide, which is why the answer depends entirely on how many bits you started with.
+    </sub>
+</p>
 
 ---
 
@@ -239,10 +295,27 @@ int align_to_4(int x) {
 **Verification** (using 6 bits for clarity):
 
 ```
-align_to_4(10):  001010 & ~(000011)  =  001010 & 111100  =  001000  =   8  ✓
-align_to_4(20):  010100 & ~(000011)  =  010100 & 111100  =  010100  =  20  ✓
+align_to_4(10):  001010 & ~(000011)  =  001010 & 111100  =  001000  =   8
+align_to_4(20):  010100 & ~(000011)  =  010100 & 111100  =  010100  =  20
 ```
 
 For 10 (binary `001010`), the two LSBs `10` get zeroed, giving `001000` = 8. For 20 (binary `010100`), the two LSBs are already `00`, so the value is unchanged.
 
+<a id="fg-5"></a>
+
+<p align=center>
+    <img src="assets/mask-align4.svg">
+    </img>
+</p>
+
+<p align=center>
+    <sub>
+        <strong>Figure V</strong>: <code>align_to_4(10)</code> as a bit-lane AND against the mask <code>~3</code>—wherever the mask has a 0, the output is forced to 0 no matter what <code>x</code> was.
+    </sub>
+</p>
+
 The general pattern `x & ~(n-1)` aligns `x` down to the nearest multiple of any power-of-two `n`. You will see this in memory allocators, hardware register setup, and cache-line alignment—anywhere a structure needs to start on a boundary that the hardware requires.
+
+---
+
+<sub>**Previous: [Introduction & Logic Gates](/lectures/01-gates)** || **Next: [Sequential Verilog & the E15 Processor](/lectures/03-sequential-verilog-and-e15)**</sub>
