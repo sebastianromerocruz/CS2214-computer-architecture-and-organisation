@@ -45,7 +45,7 @@ Consider what it takes to run a Python script. The programmer writing it doesn't
     </sub>
 </p>
 
-This course lives in the middle of this stack—**digital circuits**, **logic**, **microarchitecture**, and **architecture**. This is the layer where the interesting engineering decisions get made: how instructions are encoded, how a datapath is wired, how memory is organized. The physics below us sets constraints we have to respect; the software above us is what we're ultimately building for.
+This course lives in the middle of this stack—**digital circuits**, **logic**, **microarchitecture**, and **architecture**. This is the layer where the interesting engineering decisions get made: how instructions are encoded, how a datapath is wired, how memory is organised. The physics below us sets constraints we have to respect; the software above us is what we're ultimately building for.
 
 To understand where we're starting, it helps to trace the journey from source code down to hardware once:
 
@@ -56,7 +56,7 @@ To understand where we're starting, it helps to trace the journey from source co
 
 ### What Is a Gate, Actually?
 
-A **transistor** is a semiconductor device that acts as an electrically controlled switch: apply enough voltage to the control terminal and current flows; remove it and current stops. That binary on/off behavior is exactly what we need to represent 1 and 0.
+A **transistor** is a semiconductor device that acts as an electrically controlled switch: apply enough voltage to the control terminal and current flows; remove it and current stops. That binary on/off behaviour is exactly what we need to represent 1 and 0.
 
 A **logic gate** is what you get when you wire a small number of transistors together in a specific configuration—a circuit element that takes binary inputs and produces a single binary output according to a fixed rule. AND, OR, NOT: that's it. And yet everything your CPU does—running a video game, encrypting a file, rendering a webpage—is ultimately just those three operations, composed in very large numbers. A modern chip contains tens of billions of these switches on a piece of silicon the size of a fingernail.
 
@@ -68,7 +68,7 @@ That's the thing worth holding onto as we start: the gap between "flip a switch"
 
 ## Logic Gates
 
-Every gate can be described in three different ways, and you'll encounter all three in the wild: circuit **diagrams** in datasheets and textbooks, **Boolean equations** in papers and design documents, and **truth tables** in verification and testing. They contain exactly the same information—just expressed in different languages. Being able to move fluidly between them is less about memorization and more about having enough practice that the translation becomes automatic.
+Every gate can be described in three different ways, and you'll encounter all three in the wild: circuit **diagrams** in datasheets and textbooks, **Boolean equations** in papers and design documents, and **truth tables** in verification and testing. They contain exactly the same information—just expressed in different languages. Being able to move fluidly between them is less about memorisation and more about having enough practice that the translation becomes automatic.
 
 For each gate below, all three representations are given side by side. Try reading the truth table from the equation, and the equation from the diagram, until they feel like the same thing.
 
@@ -305,7 +305,7 @@ Without knowing operator precedence, you can't read someone else's expression co
 2. **AND**
 3. **OR**: loosest binding
 
-So `Ā · B + C` means `((NOT A) AND B) OR C`, not `NOT(A AND (B OR C))`. When there's any potential ambiguity, add parentheses. There's no cost to over-parenthesizing, and the cost of a precedence error is a wrong circuit.
+So `Ā · B + C` means `((NOT A) AND B) OR C`, not `NOT(A AND (B OR C))`. When there's any potential ambiguity, add parentheses. There's no cost to over-parenthesising, and the cost of a precedence error is a wrong circuit.
 
 ### DeMorgan's Theorem
 
@@ -339,7 +339,7 @@ You can verify either identity by checking the truth table for both sides—they
 
 Given a circuit diagram—the kind you'd find in a datasheet, a textbook problem, or the output of a synthesis tool—how do you figure out what it actually computes? That's circuit analysis: the skill of extracting the Boolean function from the wiring.
 
-The method is straightforward. Start at the inputs and work toward the output, labeling each wire with the expression it carries as you go. Every gate transforms its input expressions into an output expression according to its function. When you reach the output wire, you have the full expression.
+The method is straightforward. Start at the inputs and work towards the output, labelling each wire with the expression it carries as you go. Every gate transforms its input expressions into an output expression according to its function. When you reach the output wire, you have the full expression.
 
 ### Example
 
@@ -436,7 +436,7 @@ The truth table is authoritative—it exhaustively lists every case—but it doe
 
 ## Representing Numbers in Binary
 
-Gates operate on 0s and 1s. But the things a computer actually processes—integers, addresses, characters, instructions—are not single bits. They're *numbers*, and we need a reliable way to encode those numbers as sequences of bits. This is where the math and the hardware connect.
+Gates operate on 0s and 1s. But the things a computer actually processes—integers, addresses, characters, instructions—are not single bits. They're *numbers*, and we need a reliable way to encode those numbers as sequences of bits. This is where the maths and the hardware connect.
 
 The encoding is **positional notation**: the same idea underlying decimal, just in base 2. In decimal, each digit position represents a power of 10. In binary, each bit position represents a power of 2, and each digit—called a **bit**—is either 0 or 1. Because different bases can represent the same number very differently (`11` in binary is 3, not 11), technical documents use prefixes to remove ambiguity:
 
@@ -525,7 +525,7 @@ The reason hex works so cleanly with binary is that 16 = 2⁴: each hex digit re
 | 14      | 1110   | E   |
 | 15      | 1111   | F   |
 
-This table is worth memorizing. Once you know it, converting between binary and hex is instantaneous.
+This table is worth memorising. Once you know it, converting between binary and hex is instantaneous.
 
 ### Binary to Hexadecimal
 
@@ -555,7 +555,7 @@ F  →  15  →  1111
 
 Result: **0b 1010 0111 1111 0001**
 
-Any time you see a memory address, a color code (`#FF8800`), a network MAC address, or a register dump in a debugger, it's almost certainly in hex. The prefix `0x` is your signal. Being able to quickly read hex—and spot that `0xFF` is all ones, or that `0x80000000` has only the MSB set—is a skill you'll use constantly in systems work.
+Any time you see a memory address, a colour code (`#FF8800`), a network MAC address, or a register dump in a debugger, it's almost certainly in hex. The prefix `0x` is your signal. Being able to quickly read hex—and spot that `0xFF` is all ones, or that `0x80000000` has only the MSB set—is a skill you'll use constantly in systems work.
 
 ---
 
@@ -565,7 +565,7 @@ Any time you see a memory address, a color code (`#FF8800`), a network MAC addre
 
 Everything so far has been non-negative. But real programs constantly subtract, negate, and compare signed values—and the hardware needs to handle all of that using the same addition circuits we've already seen. The question is: how do you encode negative numbers in binary so that ordinary addition still works?
 
-A naive approach would be to reserve one bit as a sign bit (0 = positive, 1 = negative) and use the remaining bits for the magnitude. This breaks in two ways: it produces two representations of zero (`+0` and `−0`), and it requires the addition circuit to inspect the sign bit and change its behavior—complexity that propagates into every piece of arithmetic hardware. **Two's complement** is the elegant solution that avoids both problems. It's what every modern processor uses.
+A naive approach would be to reserve one bit as a sign bit (0 = positive, 1 = negative) and use the remaining bits for the magnitude. This breaks in two ways: it produces two representations of zero (`+0` and `−0`), and it requires the addition circuit to inspect the sign bit and change its behaviour—complexity that propagates into every piece of arithmetic hardware. **Two's complement** is the elegant solution that avoids both problems. It's what every modern processor uses.
 
 ### The Core Idea: Fixed Bit-Width
 

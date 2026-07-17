@@ -14,7 +14,7 @@
 
 ---
 
-Last time we learned to read a circuit diagram and extract a Boolean expression from it—and to go the other direction, building a truth table from an expression. That's circuit *analysis*. Two questions remain. First: how do you actually describe a circuit to a computer so that real hardware can be synthesized from it? Second: our gates operate on individual 0s and 1s, but a real processor operates on integers. How do those gate-level operations map onto the integers we actually compute with?
+Last time we learned to read a circuit diagram and extract a Boolean expression from it—and to go the other direction, building a truth table from an expression. That's circuit *analysis*. Two questions remain. First: how do you actually describe a circuit to a computer so that real hardware can be synthesised from it? Second: our gates operate on individual 0s and 1s, but a real processor operates on integers. How do those gate-level operations map onto the integers we actually compute with?
 
 ---
 
@@ -38,7 +38,7 @@ We'll use our running example from last lecture—the circuit with expression `Y
 
 **Structural** Verilog is the style that most directly mirrors a circuit diagram. Every gate is explicitly instantiated by name, every internal wire is declared, and the connections between them are spelled out one by one. If you can read a schematic, you can write structural Verilog from it mechanically.
 
-The fundamental unit of organization in Verilog is a **module**: a self-contained component with a defined interface to the outside world. Think of it the way you think of a function in software—something with inputs and outputs whose internals are hidden from its callers—except that in hardware, many modules can be "running" at the same time, and they're always on.
+The fundamental unit of organisation in Verilog is a **module**: a self-contained component with a defined interface to the outside world. Think of it the way you think of a function in software—something with inputs and outputs whose internals are hidden from its callers—except that in hardware, many modules can be "running" at the same time, and they're always on.
 
 ```verilog
 module MyCircuit(A, B, C, D, Y);
@@ -46,7 +46,7 @@ module MyCircuit(A, B, C, D, Y);
     output Y;
 ```
 
-The name after `module` is the module's identifier. The parenthesized list is the **port list**—every signal that crosses the module boundary must appear here. The `input` and `output` declarations specify which direction each signal flows.
+The name after `module` is the module's identifier. The parenthesised list is the **port list**—every signal that crosses the module boundary must appear here. The `input` and `output` declarations specify which direction each signal flows.
 
 <a id="fg-1"></a>
 
@@ -121,7 +121,7 @@ Both versions of `MyCircuit` describe the same circuit and produce equivalent ha
 | `A + B` | `A \| B`|
 | `A ⊕ B` | `A ^ B` |
 
-Operator precedence in Verilog follows C: `~` binds tightest, then `&`, then `^`, then `|`. This matches Boolean precedence (NOT > AND > OR), so expressions translate directly—but always parenthesize explicitly anyway. Silent precedence errors are hard to find.
+Operator precedence in Verilog follows C: `~` binds tightest, then `&`, then `^`, then `|`. This matches Boolean precedence (NOT > AND > OR), so expressions translate directly—but always parenthesise explicitly anyway. Silent precedence errors are hard to find.
 
 Your module declarations should follow this pattern:
 
@@ -153,7 +153,7 @@ A popular open-source synthesis framework is **Yosys**:
 
 Two things are worth knowing about what synthesis does. First, both Verilog styles—structural and continuous assignment—produce equivalent netlists. The two are genuinely interchangeable; the choice between them is a matter of readability, not of what hardware gets built.
 
-Second, synthesis may **optimize** the circuit. It might reorder gates, merge them, or eliminate redundant logic in ways that preserve the truth table while using fewer transistors. This process is called **logic minimization**. The implication is freeing: don't contort your Verilog trying to write a clever implementation. Write the correct Boolean function clearly, and trust the tool to find an efficient realization. A correct description that the tool optimizes is far better than a hand-optimized description with a bug.
+Second, synthesis may **optimise** the circuit. It might reorder gates, merge them, or eliminate redundant logic in ways that preserve the truth table while using fewer transistors. This process is called **logic minimisation**. The implication is freeing: don't contort your Verilog trying to write a clever implementation. Write the correct Boolean function clearly, and trust the tool to find an efficient realisation. A correct description that the tool optimises is far better than a hand-optimised description with a bug.
 
 ---
 
@@ -280,7 +280,7 @@ bool is_odd(int x) {
 }
 ```
 
-The parentheses around `x & 1` are essential. In C, `==` has *higher* precedence than `&`, so `x & 1 == 1` parses as `x & (1 == 1)`, which reduces to `x & 1`—accidentally correct here, but wrong in general and confusing always. Parenthesize bitwise sub-expressions explicitly.
+The parentheses around `x & 1` are essential. In C, `==` has *higher* precedence than `&`, so `x & 1 == 1` parses as `x & (1 == 1)`, which reduces to `x & 1`—accidentally correct here, but wrong in general and confusing always. Parenthesise bitwise sub-expressions explicitly.
 
 **Round down to the nearest multiple of four:**
 
