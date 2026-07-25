@@ -111,6 +111,7 @@ Temporary Items
 
 lectures/*
 !lectures/01-gates/
+!lectures/01-gates/*
 
 # Personal scratch notes (not student-facing, not part of the published repo)
 concepts/
@@ -126,6 +127,9 @@ past-material/
 
 # Instructor prep briefs (private, not student-facing)
 **/brief.md
+**/brief.pdf
+
+**/bit_shifting.dSYM/
 
 # Practice exercises (working drafts, not part of the published course repo)
 exercises/
